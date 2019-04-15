@@ -11,6 +11,7 @@ namespace Newsletter.Repositories
     {
         IEnumerable<Subscription> GetSubscriptions();
         Subscription GetSubscription(int id);
+        Boolean CheckEmailExists(string email);
         void CreateSubscription(Subscription subscription);
         void UpdateSubscription(Subscription subscription);
         void DeleteSubscription(int id);

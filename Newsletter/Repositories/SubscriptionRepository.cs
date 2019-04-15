@@ -13,6 +13,15 @@ namespace Newsletter.Repositories
         [Dependency]
         public SubscriptionDbContext DbContext { get; set; }
 
+        public bool CheckEmailExists(string email)
+        {
+            var result = DbContext.Subscriptions.Where(s => s.EmailAddress == email).FirstOrDefault();
+            if (result != null)
+                return true;
+            else
+                return false;
+        }
+
         public void CreateSubscription(Subscription subscription)
         {
             DbContext.Subscriptions.Add(subscription);

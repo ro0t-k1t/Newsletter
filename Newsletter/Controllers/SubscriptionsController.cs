@@ -41,25 +41,29 @@ namespace Newsletter.Controllers
             return View(subscription);
         }
 
-        // GET: Subscriptions/Create
-        public ActionResult Create()
+        // GET: Subscriptions/SignUp
+        public ActionResult SignUp()
         {
             return View();
         }
 
-        // POST: Subscriptions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Subscriptions/SignUp
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,EmailAddress,Reason,DateTime")] Subscription subscription)
+        public ActionResult SignUp([Bind(Include = "ID,EmailAddress,Origin,OriginOther,Reason")] Subscription subscription)
         {
-            if (ModelState.IsValid)
+            if (subscriptionRepository.CheckEmailExists(subscription.EmailAddress))
             {
-                subscriptionRepository.CreateSubscription(subscription);
-                return RedirectToAction("Index");
+                ViewBag.Message = "This email is already signed up";
             }
-
+            else if (ModelState.IsValid)
+            {
+                subscription.DateTime = DateTime.Now;
+                subscriptionRepository.CreateSubscription(subscription);
+                ViewBag.Message = "Signup success";
+                ModelState.Clear();
+                return View();
+            }         
             return View(subscription);
         }
 
@@ -79,11 +83,9 @@ namespace Newsletter.Controllers
         }
 
         // POST: Subscriptions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,EmailAddress,Reason,DateTime")] Subscription subscription)
+        public ActionResult Edit([Bind(Include = "ID,EmailAddress,Origin,OriginOther,Reason,DateTime")] Subscription subscription)
         {
             if (ModelState.IsValid)
             {

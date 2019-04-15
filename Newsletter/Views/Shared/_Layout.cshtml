@@ -21,7 +21,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Sign Up", "Create", "Subscriptions")</li>
+                    <li>@Html.ActionLink("Sign Up", "SignUp", "Subscriptions")</li>
+                    <li>@Html.ActionLink("Show Subscriptions", "", "Subscriptions")</li>
                 </ul>
             </div>
         </div>
@@ -30,7 +31,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Ronan Higgins Newsletter Coding Test</p>
+            <p>&copy; @DateTime.Now.Year - Ronan Higgins GreenFinch Coding Test</p>
         </footer>
     </div>
 

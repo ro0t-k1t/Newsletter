@@ -1,0 +1,91 @@
+﻿@model Newsletter.Models.Subscription
+
+@{
+    ViewBag.Title = "Subscribe to our Newsletter";
+}
+
+<h2>Sign Up!</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Complete the form below to sign up to our newsletter</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Origin, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Origin, new { @class = "form-control", @id = "origindropdown" })
+                @Html.ValidationMessageFor(model => model.Origin, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="originother" style="display:none">
+            @Html.LabelFor(model => model.OriginOther, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OriginOther, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OriginOther, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Reason, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Reason, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+       
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Sign Up!" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        function toggle() {
+            var selectedItem = $("#origindropdown").val();
+            if (selectedItem == "2") {
+                console.log("show");
+                $("#originother").show();
+            } else {
+                console.log("hide");
+                $("#originother").hide();
+            }
+        }
+
+        function showMessage() {
+            if ('@ViewBag.Message' != "") {
+                alert('@ViewBag.Message')
+            }
+        }
+
+        $(document).ready(function () {
+            toggle();          
+            $("#origindropdown").change(function () {
+                toggle();
+            });
+            showMessage();
+        });
+
+
+    </script>
+}
