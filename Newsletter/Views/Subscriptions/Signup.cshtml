@@ -61,6 +61,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
 
+        // Toggled the visiblity of the Other Origin div
         function toggle() {
             var selectedItem = $("#origindropdown").val();
             if (selectedItem == "2") {
@@ -72,6 +73,7 @@
             }
         }
 
+        // Shows failure and success messages
         function showMessage() {
             if ('@ViewBag.Message' != "") {
                 alert('@ViewBag.Message')
@@ -79,10 +81,13 @@
         }
 
         $(document).ready(function () {
-            toggle();          
+            toggle(); 
+
+            // Dropdown change listener
             $("#origindropdown").change(function () {
                 toggle();
             });
+
             showMessage();
         });
 

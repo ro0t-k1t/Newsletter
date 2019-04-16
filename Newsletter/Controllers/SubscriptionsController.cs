@@ -13,20 +13,27 @@ namespace Newsletter.Controllers
 {
     public class SubscriptionsController : Controller
     {
+
         private ISubscriptionRepository subscriptionRepository;
 
+        // Repository Pattern, constructor injection using unity
         public SubscriptionsController(ISubscriptionRepository subscriptionRepository)
         {
             this.subscriptionRepository = subscriptionRepository;
         }
 
-        // GET: Subscriptions
+        /// <summary>
+        /// GET: Gets a list of all subscriptions
+        /// </summary>
         public ActionResult Index()
         {
             return View(subscriptionRepository.GetSubscriptions());
         }
 
-        // GET: Subscriptions/Details/5
+        /// <summary>
+        /// GET: Gets details of subscription
+        /// </summary>
+        /// <param name="id">ID of subscription to be queried</param>
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,13 +48,18 @@ namespace Newsletter.Controllers
             return View(subscription);
         }
 
-        // GET: Subscriptions/SignUp
+        /// <summary>
+        /// GET: Gets signup page
+        /// </summary>
         public ActionResult SignUp()
         {
             return View();
         }
 
-        // POST: Subscriptions/SignUp
+        /// <summary>
+        /// POST: Creates subscription
+        /// </summary>
+        /// <param name="subscription">subscription object from form</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SignUp([Bind(Include = "ID,EmailAddress,Origin,OriginOther,Reason")] Subscription subscription)
@@ -67,7 +79,10 @@ namespace Newsletter.Controllers
             return View(subscription);
         }
 
-        // GET: Subscriptions/Edit/5
+        /// <summary>
+        /// GET: Gets view to edit subscription
+        /// </summary>
+        /// <param name="id">ID of subscription to be queried</param>
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,7 +97,10 @@ namespace Newsletter.Controllers
             return View(subscription);
         }
 
-        // POST: Subscriptions/Edit/5
+        /// <summary>
+        /// POST: Edits subscription
+        /// </summary>
+        /// <param name="subscription">subscription object from form</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,EmailAddress,Origin,OriginOther,Reason,DateTime")] Subscription subscription)
@@ -95,7 +113,10 @@ namespace Newsletter.Controllers
             return View(subscription);
         }
 
-        // GET: Subscriptions/Delete/5
+        /// <summary>
+        /// GET: Get view to delete subscription
+        /// </summary>
+        /// <param name="id">ID of subscription to be queried</param>
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,7 +131,10 @@ namespace Newsletter.Controllers
             return View(subscription);
         }
 
-        // POST: Subscriptions/Delete/5
+        /// <summary>
+        /// POST: Deletes subscription
+        /// </summary>
+        /// <param name="id">ID of subscription to be queried</param>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
